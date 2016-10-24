@@ -6,28 +6,35 @@
 #ifndef SPI-Seven-segment_h
 #define SPI_Seven-segment_h
 
+#include <stdint.h>
 
 class SPI_7_segment
 {
 	private :
 		char *buffer;
+		uint8_t buffer_len;
 		/* Pin number for clocking data */
 		int CLK;
 		/* Pin number for data */
 		int DATA_OUT;
 		/* Pin for turning display on/off or PWM for dimming */
 		int ENABLE;
+		//0, 1, 2 .... F
+		static const uint8_t DigitMap[16] = { 0xFC, 0x60, 0xDA, 0xf2, 0x66, 0xb6, 0xbe, 0xe0, 0xfe, 0xf6, 0xee, 0x3e, 0x1a, 0x7a, 0x9e, 0x8e };
 
 	public :
-   /* :w
-     * Create a new controler 
-     * Params :
-     * int dataPin		The pin on the Arduino where data gets shifted out
-     * int clockPin		The pin for the clock
-     * int enPin			The pin for turing Display on/off
-     * int numDevices	The maximum number of 7-Segments to be controled
-     */
-    SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices);
+	/* :w
+	 * Create a new controler 
+	 * Params :
+    * int dataPin		The pin on the Arduino where data gets shifted out
+	 * int clockPin		The pin for the clock
+	 * int enPin			The pin for turing Display on/off
+	 * int numDevices	The maximum number of 7-Segments to be controled
+	 */
+	SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices);
+	void clear(void);
+	uint8_t map_digit(char in);
+	void redraw(void);
 
 };
 
