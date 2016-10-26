@@ -7,6 +7,7 @@
 #define SPI_Seven-segment_h
 
 #include <stdint.h>
+#include <stdlib.h>
 
 class SPI_7_segment
 {
@@ -21,6 +22,7 @@ class SPI_7_segment
 		int ENABLE;
 		//0, 1, 2 .... F
 		static const uint8_t DigitMap[16] = { 0xFC, 0x60, 0xDA, 0xf2, 0x66, 0xb6, 0xbe, 0xe0, 0xfe, 0xf6, 0xee, 0x3e, 0x1a, 0x7a, 0x9e, 0x8e };
+		uint8_t map_digit(char in);
 
 	public :
 	/* :w
@@ -31,10 +33,11 @@ class SPI_7_segment
 	 * int enPin			The pin for turing Display on/off
 	 * int numDevices	The maximum number of 7-Segments to be controled
 	 */
-	SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices);
-	void clear(void);
-	uint8_t map_digit(char in);
-	void redraw(void);
+		SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices);
+		void clear(void);
+		void redraw(void);
+		int SPI_7_segment::print(char *data, size_t len);
+		int SPI_7_segment::print(char *data, size_t len, size_t xpos);
 
 };
 
