@@ -13,13 +13,15 @@ SPI_7_segment::SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices)
 	ENABLE   = enPin;
    buffer_len = numDevices;
 	
-	buffer = malloc(numDevices); // Allocate space for databuffer
+	buffer = (char *)malloc(numDevices); // Allocate space for databuffer
 	memset(buffer,0,numDevices);
 }
 
 void SPI_7_segment::clear(void)
 {
 	memset(buffer, 0, buffer_len);
+	if(autoupdate==true)
+		redraw();
 }
 
 uint8_t SPI_7_segment::map_digit(char in)
@@ -64,6 +66,8 @@ int SPI_7_segment::print(char *data, size_t len)
 	{
 		buffer[cnt] = map_digit(data[cnt]);
 	}
+	if(autoupdate==true)
+		redraw();
 }
 
 int SPI_7_segment::print(char *data, size_t len, size_t xpos)
@@ -75,7 +79,12 @@ int SPI_7_segment::print(char *data, size_t len, size_t xpos)
 	{
 		buffer[cnt+xpos] = map_digit(data[cnt]);
 	}
+	if(autoupdate==true)
+		redraw();
 }
 
-//SPI_7_segment::
+void SPI_7_segment::SetAutoUpdate(bool update)
+{
+	autoupdate=update;
+}
 

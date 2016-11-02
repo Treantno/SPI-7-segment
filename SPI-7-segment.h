@@ -21,11 +21,12 @@ class SPI_7_segment
 		/* Pin for turning display on/off or PWM for dimming */
 		int ENABLE;
 		//0, 1, 2 .... F
-		static const uint8_t DigitMap[16] = { 0xFC, 0x60, 0xDA, 0xf2, 0x66, 0xb6, 0xbe, 0xe0, 0xfe, 0xf6, 0xee, 0x3e, 0x1a, 0x7a, 0x9e, 0x8e };
+		const uint8_t DigitMap[16] = { 0xFC, 0x60, 0xDA, 0xf2, 0x66, 0xb6, 0xbe, 0xe0, 0xfe, 0xf6, 0xee, 0x3e, 0x1a, 0x7a, 0x9e, 0x8e };
 		uint8_t map_digit(char in);
+		bool autoupdate=false;
 
 	public :
-	/* :w
+	/* 
 	 * Create a new controler 
 	 * Params :
     * int dataPin		The pin on the Arduino where data gets shifted out
@@ -36,8 +37,9 @@ class SPI_7_segment
 		SPI_7_segment(int dataPin, int clkPin, int enPin, int numDevices);
 		void clear(void);
 		void redraw(void);
-		int SPI_7_segment::print(char *data, size_t len);
-		int SPI_7_segment::print(char *data, size_t len, size_t xpos);
+		int print(char *data, size_t len);
+		int print(char *data, size_t len, size_t xpos);
+		void SetAutoUpdate(bool update);
 
 };
 
